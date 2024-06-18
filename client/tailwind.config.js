@@ -2,6 +2,7 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
+    fontFamily: { crimson: ["Crimson Text"] },
     extend: {
       backgroundColor: {
         primary: {
@@ -15,6 +16,11 @@ export default {
           700: "#2C3A61",
           800: "#1E2640",
           900: "#0F1320",
+        },
+        overlay: {
+          70: "rgba(0,0,0,0.7)",
+          50: "rgba(0,0,0,0.5)",
+          30: "rgba(0,0,0,0.3)",
         },
       },
       colors: {
@@ -36,5 +42,5 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms")],
 };

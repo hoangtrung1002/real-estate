@@ -1,10 +1,9 @@
 import { cn } from "@/utils/helper";
 
-interface ButtonProps {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: string;
   className?: string;
-  onClick: () => void;
-  type?: "button" | "submit" | "reset";
+  onClick?: () => void;
   variant?: "primary" | "secondary";
 }
 
@@ -12,12 +11,10 @@ const Button = ({
   children,
   className,
   onClick,
-  type = "button",
   variant = "primary",
 }: ButtonProps) => {
   return (
     <button
-      type={type}
       onClick={onClick}
       className={cn(
         "py-3 px-4 bg-primary-700 rounded-md text-white",

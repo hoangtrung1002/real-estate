@@ -3,7 +3,7 @@ const Home = () => {
   return (
     <div className="w-full">
       <div className="relative w-full h-fit">
-        <img src={Banner} alt="banner" />
+        <img src={Banner} alt="banner" className="object-cover w-full" />
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-6 pt-12">
           <h1 className="text-5xl text-white">Find Your Dream Home</h1>
           <span className="flex flex-col items-center text-lg text-white">

@@ -1,3 +1,6 @@
+import Logo from "@/assets/logo.png";
+import LogoStroke from "@/assets/logo-stroke.png";
+
 export const PATH = {
   PUBLIC_LAYOUT: "/",
   HOME: "",
@@ -14,3 +17,5 @@ export const NAV_LINKS = [
   { label: "PROPERTIES", link: `/${PATH.PROPERTIES}` },
   { label: "SEARCH", link: `/${PATH.SEARCH}` },
 ];
+
+export { Logo, LogoStroke };
