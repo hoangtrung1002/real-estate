@@ -13,7 +13,7 @@ const register = asyncHandler(async (req, res) => {
 
   return res.json({
     success: response[1],
-    mes: response[1] ? "Your account is created" : "Your phone already exists",
+    mess: response[1] ? "Your account is created" : "Your phone already exists",
   });
 });
 const signIn = asyncHandler(async (req, res, next) => {
@@ -26,14 +26,14 @@ const signIn = asyncHandler(async (req, res, next) => {
     return throwErrorWithStatus(401, "User does not exist", res, next);
 
   const token = jwt.sign(
-    { uid: user.uid, role: user.role },
+    { id: user.id, role: user.role },
     process.env.JWT_SECRET,
     { expiresIn: "7d" }
   );
 
   return res.json({
     success: true,
-    mes: "Sign in successfully",
+    mess: "Sign in successfully",
     accessToken: token,
   });
 });
