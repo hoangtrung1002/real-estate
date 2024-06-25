@@ -1,4 +1,6 @@
 import { Route, Routes } from "react-router-dom";
+import { Modal } from "./components";
+import { Toaster } from "./components/ui/toaster";
 import {
   About,
   Home,
@@ -7,12 +9,19 @@ import {
   PublicLayout,
   Search,
 } from "./pages/public";
-import { PATH } from "./utils/constant";
 import { useAppStore } from "./store/useAppStore";
-import { Modal } from "./components";
+import { PATH } from "./utils/constant";
+import { useUserStore } from "./store/useUserStore";
+import { useEffect } from "react";
 
 function App() {
   const showModal = useAppStore((state) => state.isShowModal);
+  const { getUserCurrent, token } = useUserStore();
+
+  useEffect(() => {
+    getUserCurrent();
+  }, [token]);
+
   return (
     <>
       {showModal && <Modal />}
@@ -25,6 +34,7 @@ function App() {
           <Route path={PATH.SEARCH} element={<Search />} />
         </Route>
       </Routes>
+      <Toaster />
     </>
   );
 }

@@ -1,78 +1,24 @@
 import { cn } from "@/utils/helper";
 import * as React from "react";
-import {
-  Control,
-  Controller,
-  ControllerRenderProps,
-  FieldError,
-  FieldPath,
-  FieldValues,
-  RegisterOptions,
-} from "react-hook-form";
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  error?: FieldError;
-  name?: string;
-  customstyle?: string;
-  field?: ControllerRenderProps<FieldValues, FieldPath<FieldValues>>;
-}
-
-interface InputController {
-  name?: string;
-  rules?: RegisterOptions;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control: Control<FieldValues> | any;
-  props?: Omit<InputProps, "error" | "field">;
-}
-
-const InputController: React.FC<InputController> = ({
-  control,
-  name = "",
-  rules,
-  props,
-}) => {
-  return (
-    <Controller
-      control={control}
-      rules={rules}
-      name={name}
-      defaultValue=""
-      render={({ field, fieldState: { error } }) => (
-        <Input error={error} {...field} name={field.name} {...props} />
-      )}
-    />
-  );
-};
+export interface InputProps
+  extends React.InputHTMLAttributes<HTMLInputElement> {}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, name, error, field, ...props }, ref) => {
+  ({ className, type, ...props }, ref) => {
     return (
-      <div className={cn("flex flex-col gap-2 w-full")}>
-        {name && (
-          <label
-            className={cn("font-medium capitalize text-primary-700", {
-              "text-red-500": error,
-            })}
-            htmlFor={name}
-          >
-            {name}
-          </label>
+      <input
+        type={type}
+        className={cn(
+          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+          className
         )}
-        <input
-          className={cn(props.customstyle, "placeholder:text-sm", className)}
-          name={name}
-          {...field}
-          {...props}
-          ref={ref}
-        />
-        {error?.message && (
-          <>
-            <span className="text-sm text-red-500">{error?.message}</span>
-          </>
-        )}
-      </div>
+        ref={ref}
+        {...props}
+      />
     );
   }
 );
+Input.displayName = "Input";
 
-export { Input, InputController };
+export { Input };

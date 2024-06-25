@@ -1,11 +1,11 @@
 import withRouter from "@/hocs/withRouter";
+import { useAppStore } from "@/store/useAppStore";
+import { useUserStore } from "@/store/useUserStore";
 import { Logo, LogoStroke, NAV_LINKS } from "@/utils/constant";
 import { cn } from "@/utils/helper";
 import { Link, NavLink } from "react-router-dom";
-import Button from "../ui/button";
-import { useUserStore } from "@/store/useUserStore";
-import { useAppStore } from "@/store/useAppStore";
 import Login from "../login/Login";
+import Button from "../ui/button";
 
 const NavBar = withRouter(({ location }) => {
   const token = useUserStore((state) => state.token);
@@ -41,15 +41,17 @@ const NavBar = withRouter(({ location }) => {
         ))}
         {!token ? (
           <Button
-            variant={location.pathname === "/" ? "secondary" : "primary"}
+            className="px-4 py-6 text-lg"
+            variant={location.pathname === "/" ? "outline" : "default"}
             onClick={() => setModal(true, <Login />)}
           >
             Sign in
           </Button>
         ) : (
           <Button
+            className="px-4 py-6 text-lg"
             onClick={() => {}}
-            variant={location.pathname === "/" ? "secondary" : "primary"}
+            variant={location.pathname === "/" ? "outline" : "default"}
           >
             Add Listing
           </Button>
