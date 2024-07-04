@@ -1,10 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const db = require("../models");
 const bcrypt = require("bcrypt");
-const { throwErrorWithStatus } = require("../midlleware/errorHandler");
+const { throwErrorWithStatus } = require("../middleware/errorHandler");
 const jwt = require("jsonwebtoken");
 
-const register = asyncHandler(async (req, res) => {
+const signUp = asyncHandler(async (req, res) => {
   // const { password } = req.body;
   const response = await db.User.findOrCreate({
     where: { phone: req.body.phone },
@@ -26,7 +26,7 @@ const signIn = asyncHandler(async (req, res, next) => {
     return throwErrorWithStatus(401, "User does not exist", res, next);
 
   const token = jwt.sign(
-    { id: user.id, role: user.role },
+    { id: user.id, roleCode: user.roleCode },
     process.env.JWT_SECRET,
     { expiresIn: "7d" }
   );
@@ -39,6 +39,6 @@ const signIn = asyncHandler(async (req, res, next) => {
 });
 
 module.exports = {
-  register,
+  signUp,
   signIn,
 };

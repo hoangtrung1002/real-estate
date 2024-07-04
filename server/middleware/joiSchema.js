@@ -7,18 +7,25 @@ const number = joi.string().allow(null, "");
 const array = joi.array().allow(null, "");
 const arrayReq = joi.array().allow(null, "");
 
-const registerValidator = joi.object({
+const signUpValidator = joi.object({
   password: stringReq,
   name: stringReq,
   phone: numberReq,
-  role: stringReq,
+  roleCode: string,
 });
 const singInValidator = joi.object({
   phone: numberReq,
   password: stringReq,
 });
 
+const propertyTypeValidator = joi.object({
+  name: stringReq,
+  description: stringReq,
+  image: stringReq,
+});
+
 module.exports = {
-  registerValidator,
+  signUpValidator,
   singInValidator,
+  propertyTypeValidator,
 };

@@ -1,13 +1,10 @@
-const { register, signIn } = require("../controllers/auth");
-const {
-  singInValidator,
-  registerValidator,
-} = require("../midlleware/joiSchema");
-const validateDTO = require("../midlleware/validation");
+const { signUp, signIn } = require("../controllers/auth");
+const { singInValidator, signUpValidator } = require("../middleware/joiSchema");
+const validateDTO = require("../middleware/validation");
 
 const router = require("express").Router();
 
-router.post("/register", validateDTO(registerValidator), register);
+router.post("/signup", validateDTO(signUpValidator), signUp);
 router.post("/signin", validateDTO(singInValidator), signIn);
 
 module.exports = router;
