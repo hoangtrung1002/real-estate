@@ -16,7 +16,7 @@ const createPropertyType = asyncHandler(async (req, res) => {
 });
 
 const getPropertyType = asyncHandler(async (req, res) => {
-  const { limit, page, fields, type, name, ...query } = req.query;
+  const { limit, page, fields, name, ...query } = req.query;
   const options = {};
   // Limit fields
   if (fields) {
@@ -37,7 +37,7 @@ const getPropertyType = asyncHandler(async (req, res) => {
       `%${name.toLocaleLowerCase()}%`
     );
 
-  if (type === "ALL") {
+  if (!limit) {
     const response = await db.PropertyType.findAll({
       where: query,
       ...options,
@@ -47,9 +47,21 @@ const getPropertyType = asyncHandler(async (req, res) => {
       mess: response.length > 0 ? "Got" : "Not found",
       propertyType: response,
     });
-  } else {
-    return res.json([]);
   }
+  // Pagination
+  const prevPage = page - 1 > 0 ? page : 1; // make sure the value of "page" prop is not negative
+  const offset = (prevPage - 1) * limit;
+  if (offset) options.offset = offset;
+  options.limit = +limit;
+  const response = await db.PropertyType.findAndCountAll({
+    where: query,
+    ...options,
+  });
+  return res.json({
+    success: response.length > 0,
+    mess: response.length > 0 ? "Got" : "Not found",
+    propertyType: response,
+  });
 });
 
 module.exports = { createPropertyType, getPropertyType };
